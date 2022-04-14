@@ -1,10 +1,10 @@
 public with sharing class VotingCampaignTriggerHandler extends CustomMDTTriggerHandler{
-    public List<Voting_Campaign__c> newCampaign = new List<Voting_Campaign__c>();
-    public List<Voting_Campaign__c> oldCampaign = new List<Voting_Campaign__c>();
+    public List<Voting_Campaign__c> newCampaigns = new List<Voting_Campaign__c>();
+    public List<Voting_Campaign__c> oldCampaigns = new List<Voting_Campaign__c>();
 
-    public VotingCampaignTriggerHandler(List<Voting_Campaign__c> nCampaign, List<Voting_Campaign__c> oCampaign){
-        this.newCampaign = nCampaign;
-        this.oldCampaign = oCampaign;
+    public VotingCampaignTriggerHandler(List<Voting_Campaign__c> nCampaigns, List<Voting_Campaign__c> oCampaigns){
+        this.newCampaigns = nCampaigns;
+        this.oldCampaigns = oCampaigns;
     }
 
     public VotingCampaignTriggerHandler() {
@@ -12,13 +12,14 @@ public with sharing class VotingCampaignTriggerHandler extends CustomMDTTriggerH
 
     }
 
-    public override void afterInsert(){
-            CreateGroupAfterCreateCampaign.createGroup(newCampaign);
-            System.enqueueJob(new CreateGroupAfterCreateCampaign(newCampaign));
+    public override void afterInsert(){          
+        System.enqueueJob(new AddConfiguratorsQueueable(VotingCampaignController.createGroupsAfterCreateCampaign(newCampaigns)));
     }
 
     public override void beforeDelete(){
-        DeleteGroup.deleteGroup(oldCampaign);
+        for (Voting_Campaign__c oldCampaign : oldCampaigns) {
+            VotingCampaignController.deleteGroupsAfterDeleteCampaign(oldCampaign);
+        }
     }
 
 }
