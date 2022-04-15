@@ -11,8 +11,10 @@ public with sharing class GroupsManipulation {
         List<Group> configuratorGroups = new List<Group>();
         for(Voting_Campaign__c campaign: newRecords){
             for(String role: GROUP_ROLES){
-                Group tempGroup = new Group(Name = 'CMP-' + campaign.NumberOfCampaign__c + '-' + role);
-                
+                Group tempGroup = new Group(
+                    Name = 'CMP-' + campaign.NumberOfCampaign__c + '-' + role
+                    );
+
                 groupsToInsert.add(tempGroup);
 
                 if(role == 'Configurators'){
