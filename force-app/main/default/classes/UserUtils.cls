@@ -11,7 +11,11 @@ public with sharing class UserUtils {
                 usersToBeInserted.add(configuratorUser);
         }
         
+        try{
         insert usersToBeInserted;
+        }catch(DmlException e){
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }
         
     }
 }
