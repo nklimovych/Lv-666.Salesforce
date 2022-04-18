@@ -1,4 +1,4 @@
-public with sharing class UserUtils {
+public with sharing class GroupMemberUtils {
     
     @future
     public static void insertUser(Set<Id> groupIds){

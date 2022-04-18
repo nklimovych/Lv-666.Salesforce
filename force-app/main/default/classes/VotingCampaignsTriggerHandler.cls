@@ -1,8 +1,10 @@
 public with sharing class VotingCampaignsTriggerHandler extends CustomMDTTriggerHandler{
     
     public override void afterInsert(){
-        UserUtils.insertUser(
-            PublicGroupUtils.createGroupsAfterCreatingCampaign(Trigger.new)
+        GroupMemberUtils.insertUser(
+            PublicGroupUtils.getConfiguratorGroupIds(
+                PublicGroupUtils.createGroupsAfterCreatingCampaign(Trigger.new)
+            )    
         );
     }
 

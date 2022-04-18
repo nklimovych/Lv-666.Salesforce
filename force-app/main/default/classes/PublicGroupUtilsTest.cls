@@ -1,38 +1,54 @@
 @isTest
 private class PublicGroupUtilsTest {
-    static testMethod void createGroupsAfterCreatingCampaign(){
-        List<Voting_Campaign__c> lstCampaigns = PublicGroupUtilsTest.getCampaigns();
-        System.debug(lstCampaigns);
-        insert lstCampaigns;
+    
+    @testSetup static void setup(){
+        List<Group> groupsList = new List<Group>();
+        groupsList.add(new Group(Name='CMP-00013-Configurators'));
+        groupsList.add(new Group(Name='CMP-00013-Analyst'));
+        groupsList.add(new Group(Name='CMP-00013-Voters'));
+        groupsList.add(new Group(Name='CMP-00013-Moderators'));
         
-        List<Voting_Campaign__c> c = [SELECT NumberOfCampaign__c FROM Voting_Campaign__c WHERE Name='test'];
+        insert groupsList;
 
-        List<Group> expectedGroups = new List<Group>();
-            expectedGroups.add(new Group(Name = 'CMP-' + c.get(0).NumberOfCampaign__c +'-Moderators'));
-            expectedGroups.add(new Group(Name = 'CMP-' + c.get(0).NumberOfCampaign__c +'-Analysts'));
-            expectedGroups.add(new Group(Name = 'CMP-' + c.get(0).NumberOfCampaign__c +'-Voters'));
-            expectedGroups.add(new Group(Name = 'CMP-' + c.get(0).NumberOfCampaign__c +'-Configurators'));
-        
-        System.debug(expectedGroups);
-        List<Group> actualGroups = [SELECT Name 
-                                    FROM GROUP 
-                                    WHERE Name 
-                                    LIKE :lstCampaigns.get(0).NumberOfCampaign__c];
-        
-        System.assertEquals(expectedGroups, actualGroups);
-
-    } 
-
-    private static List<Voting_Campaign__c> getCampaigns(){
         List<Voting_Campaign__c> campaignsList = new List<Voting_Campaign__c>();
         Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Online' LIMIT 1].Id;
         campaignsList.add(new Voting_Campaign__c(
-                            RecordTypeId=recordTypeId, 
-                            Name='Test', 
-                            Voting_Start_Date__c = Date.today(), 
-                            Voting_Status__c = 'New')); 
+            RecordTypeId=recordTypeId, 
+            Name='Test', 
+            Voting_Start_Date__c = Date.today(), 
+            Voting_Status__c = 'New')
+        ); 
         
+        insert campaignsList;
+    }
+    
+    
+    @isTest
+    static void createGroupsAfterCreatingCampaign(){
+        Voting_Campaign__c campaignForTest = [SELECT NumberOfCampaign__c
+                FROM Voting_Campaign__c
+                WHERE NAME = 'Test'
+                LIMIT 1
+            ];
+        List<Group> expectedGroups = [SELECT Name 
+            FROM Group 
+            WHERE Name 
+            Like :'%'+campaignForTest.NumberOfCampaign__c+'%'
+        ];
+        
+        System.assertEquals(4, expectedGroups.size());
 
-        return campaignsList;
+    }
+    
+    @isTest
+    static void deleteGroups(){
+        List<Group> testGroups = [SELECT Name 
+            FROM Group 
+            WHERE Name 
+            Like :'%00013%'
+        ];
+        delete testGroups;
+        List<Group> expectedGroup = [SELECT Name FROM Group WHERE Name LIKE :'%00013%']; 
+        System.assertEquals(0, expectedGroup.size());
     }
 }
