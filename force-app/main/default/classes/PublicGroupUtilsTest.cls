@@ -30,6 +30,7 @@ private class PublicGroupUtilsTest {
                 WHERE NAME = 'Test'
                 LIMIT 1
             ];
+        
         List<Group> expectedGroups = [SELECT Name 
             FROM Group 
             WHERE Name 
