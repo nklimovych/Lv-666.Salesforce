@@ -5,7 +5,7 @@ public with sharing class CreateGroups{
         'Voter',
         'Analyst'};
 
-    public static void createUserGroups(List<Campaign__c> campNew){
+    public static List<Group> createUserGroups(List<Campaign__c> campNew){
         List<Group> newGroups = new List<Group>();
         for(Campaign__c camp : campNew){
             for (String role: userRoles) {
@@ -13,17 +13,18 @@ public with sharing class CreateGroups{
             }
         }
         insert newGroups;
+        return newGroups;
+
     }
 
     public static void deleteUserGroups(List<Campaign__c> campDel){
         List<String> selectGroups = new List<String>();
         for (Campaign__c c: campDel){
-            for (String roles: userRoles) {
-                selectGroups.add('CMP-' + c.Campaign_Number__c + '-' + roles);
+            for (String role: userRoles) {
+                selectGroups.add('CMP-' + c.Campaign_Number__c + '-' + role);
             }
         }
         List<Group> delGroups = [SELECT Name FROM Group WHERE Name IN :selectGroups];
         delete delGroups;
     }
 }
-//дописати інсерт конфігуратора

@@ -2,24 +2,21 @@ public with sharing class VotingCampaignTriggerHandler extends CustomMDTTriggerH
     public List<Campaign__c> newCampaings = new List<Campaign__c>();
     public List<Campaign__c> oldCampaings = new List<Campaign__c>();
 
-    public votingCampaignTriggerHandler(List<Campaign__c> newCampaings, List<Campaign__c> oldCampaings) {
-        this.newCampaings = newCampaings;
-        this.oldCampaings = oldCampaings;
+    public votingCampaignTriggerHandler(List<Campaign__c> nCampaings, List<Campaign__c> oCampaings) {
+        this.newCampaings = nCampaings;
+        this.oldCampaings = oCampaings;
     }
 
-    public campaignTriggerHandler(){
+    public votingCampaignTriggerHandler(){
         this((List<Campaign__c>)Trigger.new, (List<Campaign__c>)Trigger.old);
     }
+
     public override void afterInsert(){
-        for(Campaign__c cr : newCampaings){
-            CreateGroups.createUserGroups(cr);
-        }
+        System.enqueueJob(new AddUserToGroup(CreateGroups.createUserGroups(newCampaings)));
     }
+
     public override void afterDelete(){
-        for(Campaign__c del : oldCampaings){
-            CreateGroups.deleteUserGroups(del);
-        }
+        CreateGroups.deleteUserGroups(oldCampaings);
+        System.debug('afterDelete');
     }
 }
-
-// варто передивитись як в макса і внести корективи, не факт що це запрацює, була помилка в 5 рядку!!
