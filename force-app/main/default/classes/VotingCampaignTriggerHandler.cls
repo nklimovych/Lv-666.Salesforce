@@ -32,7 +32,7 @@ public with sharing class VotingCampaignTriggerHandler extends CustomMDTTriggerH
      * Invokes method to delete public groups attached to voting campaigns
      */
     public override void beforeDelete(){
-            new VotingCampaignUtil().deleteGroupsAfterDeleteCampaign(oldCampaigns);
+        new VotingCampaignUtil().deleteGroupsAfterDeleteCampaign(oldCampaigns);
     }
 
 }

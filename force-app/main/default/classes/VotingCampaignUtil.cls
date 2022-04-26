@@ -3,7 +3,7 @@
  */ 
 public with sharing class VotingCampaignUtil {
     //array of roles
-    private final String[] ROLES = new String[]{'-Moderators', '-Analysts', '-Voters', '-Configurators'};
+    private final List<String> ROLES = new List<String>{'-Moderators', '-Analysts', '-Voters', '-Configurators'};
     /**
      * @description creates public groups for any voting campaign inserted
      * @param  newCampeigns list of inserted campaigns
@@ -11,10 +11,8 @@ public with sharing class VotingCampaignUtil {
      */ 
     public List<Group> createGroupsAfterCreateCampaign(List<Voting_Campaign__c> newCampeigns){
         List<Group> groups = new List<Group>();      
-        for(String role:ROLES){
-            for (Voting_Campaign__c newCampaign : newCampeigns) {
-                groups.add(new Group(Name = 'CMP-' + newCampaign.Name + role));
-            }
+        for(String name:namesOfGroups(newCampeigns)){            
+            groups.add(new Group(Name = name));            
         }
         insert groups;
         return groups;
@@ -24,12 +22,21 @@ public with sharing class VotingCampaignUtil {
      * @param  oldCampeigns list of deleted campaigns
      */ 
     public void deleteGroupsAfterDeleteCampaign(List<Voting_Campaign__c> oldCampeigns){
+        List<String> names = namesOfGroups(oldCampeigns);
+        delete [SELECT Name FROM Group WHERE Name IN :names ];
+    }
+    /**
+     * @description creates list of names for public groups
+     * @param  campeigns list of campaigns
+     * @return list of names for public groups
+     */
+    public List<String> namesOfGroups(List<Voting_Campaign__c> campeigns){
         List<String> names = new List<String>();
         for(String role:ROLES){
-            for (Voting_Campaign__c oldCampeign : oldCampeigns) {
-                names.add('CMP-'+oldCampeign.name+role);
+            for (Voting_Campaign__c campeign : campeigns) {
+                names.add('CMP-'+campeign.name+role);
             }    
         }
-        delete [SELECT Name FROM Group WHERE Name IN :names ];
+        return names;
     }
 }

@@ -17,17 +17,17 @@ public with sharing class AddConfiguratorsQueueable implements Queueable {
      */ 
     public void execute(QueueableContext context){
         List<GroupMember> members = new List<GroupMember>();
+        Id idOfUser = UserInfo.getUserId();
         for (Group g : newGroups) {
             GroupMember member = new GroupMember();
             if(g.name.contains('Configurators')){
                 member.GroupId = g.Id;
-                member.UserOrGroupId = UserInfo.getUserId();
+                member.UserOrGroupId = idOfUser;
                 members.add(member);
             }            
         }   
         try {
-            insert members;
-    
+            insert members;            
         } catch (Exception e) {
             System.enqueueJob(new ExceptionUtility(e));
         }   
