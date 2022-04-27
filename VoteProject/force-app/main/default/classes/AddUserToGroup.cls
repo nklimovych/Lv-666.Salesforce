@@ -6,7 +6,7 @@
 public with sharing class AddUserToGroup implements Queueable {
 
     private List<Group> newGroups;
-	private final String configuratorRole = 'Configurator';
+    private final String configuratorRole = 'Configurator';
     private String userId = userInfo.getUserId();
 
     /**
