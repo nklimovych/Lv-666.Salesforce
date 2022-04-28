@@ -1,12 +1,18 @@
-public with sharing class GroupMemberUtils{
+/*
+* This is class for inserting user in configurator public group after its creation
+*/
+public with sharing class GroupMemberUtils implements Queueable{
     
     public Set<Id> configuratorGroupsId = new Set<Id>();
 
-    // Method adds user who created campaign to configurator public group
     public GroupMemberUtils(Set<Id> groupsIdList){
         this.configuratorGroupsId = groupsIdList;
     }
 
+    /**
+     * This asynchronous method inserts configurator user in public group
+     * which is created recently  
+     */
     public void execute(QueueableContext context){
         List<GroupMember> usersToBeInserted = new List<GroupMember>();
         for(Id groupId: configuratorGroupsId){
@@ -20,30 +26,8 @@ public with sharing class GroupMemberUtils{
         
         try{
             insert usersToBeInserted;
-        }catch(DmlException e){
-            new ExceptionUtility().generateEmailMessage(e).notifyUsers();
+        }catch(Exception e){
+            System.enqueueJob(new ExceptionUtility(e));
         }
     }
-
-    // Class for asynchronous mail notifications
-    // public class MailNotification implements Queueable{
-        
-    //     DmlException exceptionReason = new DmlException();
-    //     public MailNotification(DmlException e){
-    //         this.exceptionReason = e;
-    //     }
-
-    // public void execute(QueueableContext context){
-    //     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    //     mail.setToAddresses(new String[]  {UserInfo.getUserEmail()});
-    //         mail.setSubject(
-    //             'Apex DML_EXCEPTION!'
-    //         );
-    //         mail.setSenderDisplayName('Salesforce admin');
-    //         String content = 'You got some issue in GroupMemberUtils class when'
-    //         + 'inserting user to public group. </br></br> Problem message: ' + exceptionReason.getMessage(); 
-    //         mail.setHtmlBody(content);
-    //         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
-    //     }
-    // }
 }
