@@ -18,6 +18,7 @@ public inherited sharing class ExceptionUtility implements Queueable {
         this.handledException = handledException;
     }
 
+    
     /**
     * Generates email message and notifies users.
     * @param  context Queueable context
