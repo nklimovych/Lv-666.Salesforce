@@ -1,0 +1,42 @@
+{
+  "summary": {
+    "outcome": "Passed",
+    "testsRan": 1,
+    "passing": 1,
+    "failing": 0,
+    "skipped": 0,
+    "passRate": "100%",
+    "failRate": "0%",
+    "skipRate": "0%",
+    "testStartTime": "Fri Apr 29 2022 00:50:31",
+    "testExecutionTimeInMs": 43,
+    "testTotalTimeInMs": 43,
+    "commandTimeInMs": 208,
+    "hostname": "https://nulp2-dev-ed.my.salesforce.com",
+    "orgId": "00D7Q000000H84EUAS",
+    "username": "maksym.mahyrevych@gmail.com",
+    "testRunId": "7077Q00000HoVuv",
+    "userId": "0057Q000000YPg7QAG"
+  },
+  "tests": [
+    {
+      "id": "07M7Q000000lcBGUAY",
+      "queueItemId": "7097Q000000XsJGQA0",
+      "stackTrace": null,
+      "message": null,
+      "asyncApexJobId": "7077Q00000HoVuvQAF",
+      "methodName": "createGroupsAfterCreatingCampaign",
+      "outcome": "Pass",
+      "apexLogId": null,
+      "apexClass": {
+        "id": "01p7Q00000E2359QAB",
+        "name": "PublicGroupUtilsTest",
+        "namespacePrefix": null,
+        "fullName": "PublicGroupUtilsTest"
+      },
+      "runTime": 43,
+      "testTimestamp": "2022-04-28T21:50:31.000+0000",
+      "fullName": "PublicGroupUtilsTest.createGroupsAfterCreatingCampaign"
+    }
+  ]
+}
