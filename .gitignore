@@ -8,6 +8,9 @@
 .localdevserver/
 deploy-options.json
 
+# VSCode configs
+.vscode
+
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
 
@@ -38,3 +41,6 @@ $RECYCLE.BIN/
 
 # Local environment variables
 .env
+
+# file with anonymous Apex
+anonymous.apex
