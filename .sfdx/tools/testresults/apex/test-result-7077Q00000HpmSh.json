@@ -1,0 +1,50 @@
+{
+  "summary": {
+    "outcome": "Failed",
+    "testsRan": 1,
+    "passing": 0,
+    "failing": 1,
+    "skipped": 0,
+    "passRate": "0%",
+    "failRate": "100%",
+    "skipRate": "0%",
+    "testStartTime": "Mon May 02 2022 00:29:48",
+    "testExecutionTimeInMs": 66,
+    "testTotalTimeInMs": 66,
+    "commandTimeInMs": 262,
+    "hostname": "https://nulp2-dev-ed.my.salesforce.com",
+    "orgId": "00D7Q000000H84EUAS",
+    "username": "maksym.mahyrevych@gmail.com",
+    "testRunId": "7077Q00000HpmSh",
+    "userId": "0057Q000000YPg7QAG"
+  },
+  "tests": [
+    {
+      "id": "07M7Q000000lcVfUAI",
+      "queueItemId": "7097Q000000XsNLQA0",
+      "stackTrace": "Class.GeoLocationIntegrationTest.executeMethod: line 16, column 1",
+      "message": "System.QueryException: List has no rows for assignment to SObject",
+      "asyncApexJobId": "7077Q00000HpmShQAJ",
+      "methodName": "executeMethod",
+      "outcome": "Fail",
+      "apexLogId": "07L7Q000001m1SfUAI",
+      "apexClass": {
+        "id": "01p7Q00000E3xB7QAJ",
+        "name": "GeoLocationIntegrationTest",
+        "namespacePrefix": null,
+        "fullName": "GeoLocationIntegrationTest"
+      },
+      "runTime": 66,
+      "testTimestamp": "2022-05-01T21:29:48.000+0000",
+      "fullName": "GeoLocationIntegrationTest.executeMethod",
+      "diagnostic": {
+        "exceptionMessage": "System.QueryException: List has no rows for assignment to SObject",
+        "exceptionStackTrace": "Class.GeoLocationIntegrationTest.executeMethod: line 16, column 1",
+        "className": "GeoLocationIntegrationTest",
+        "compileProblem": "",
+        "lineNumber": 16,
+        "columnNumber": 1
+      }
+    }
+  ]
+}

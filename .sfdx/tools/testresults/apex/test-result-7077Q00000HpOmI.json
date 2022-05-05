@@ -1,0 +1,50 @@
+{
+  "summary": {
+    "outcome": "Failed",
+    "testsRan": 1,
+    "passing": 0,
+    "failing": 1,
+    "skipped": 0,
+    "passRate": "0%",
+    "failRate": "100%",
+    "skipRate": "0%",
+    "testStartTime": "Sun May 01 2022 00:45:56",
+    "testExecutionTimeInMs": 48,
+    "testTotalTimeInMs": 48,
+    "commandTimeInMs": 215,
+    "hostname": "https://nulp2-dev-ed.my.salesforce.com",
+    "orgId": "00D7Q000000H84EUAS",
+    "username": "maksym.mahyrevych@gmail.com",
+    "testRunId": "7077Q00000HpOmI",
+    "userId": "0057Q000000YPg7QAG"
+  },
+  "tests": [
+    {
+      "id": "07M7Q000000lcRiUAI",
+      "queueItemId": "7097Q000000XsMNQA0",
+      "stackTrace": "Class.GeoLocationIntegrationTest.testGetCallout: line 18, column 1",
+      "message": "System.AssertException: Assertion Failed: Expected: \"geometry\": {\"lat\": 52.5121441, \"lng\": 13.3083771}, Actual: \"geometry\": {\"lat\": 52.5121441,\"lng\": 13.3083771}",
+      "asyncApexJobId": "7077Q00000HpOmIQAV",
+      "methodName": "testGetCallout",
+      "outcome": "Fail",
+      "apexLogId": "07L7Q000001m0rOUAQ",
+      "apexClass": {
+        "id": "01p7Q00000E3vagQAB",
+        "name": "GeoLocationIntegrationTest",
+        "namespacePrefix": null,
+        "fullName": "GeoLocationIntegrationTest"
+      },
+      "runTime": 48,
+      "testTimestamp": "2022-04-30T21:45:56.000+0000",
+      "fullName": "GeoLocationIntegrationTest.testGetCallout",
+      "diagnostic": {
+        "exceptionMessage": "System.AssertException: Assertion Failed: Expected: \"geometry\": {\"lat\": 52.5121441, \"lng\": 13.3083771}, Actual: \"geometry\": {\"lat\": 52.5121441,\"lng\": 13.3083771}",
+        "exceptionStackTrace": "Class.GeoLocationIntegrationTest.testGetCallout: line 18, column 1",
+        "className": "GeoLocationIntegrationTest",
+        "compileProblem": "",
+        "lineNumber": 18,
+        "columnNumber": 1
+      }
+    }
+  ]
+}

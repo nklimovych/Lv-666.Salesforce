@@ -1,0 +1,42 @@
+{
+  "summary": {
+    "outcome": "Passed",
+    "testsRan": 1,
+    "passing": 1,
+    "failing": 0,
+    "skipped": 0,
+    "passRate": "100%",
+    "failRate": "0%",
+    "skipRate": "0%",
+    "testStartTime": "Mon May 02 2022 00:34:02",
+    "testExecutionTimeInMs": 291,
+    "testTotalTimeInMs": 291,
+    "commandTimeInMs": 192,
+    "hostname": "https://nulp2-dev-ed.my.salesforce.com",
+    "orgId": "00D7Q000000H84EUAS",
+    "username": "maksym.mahyrevych@gmail.com",
+    "testRunId": "7077Q00000Hpmby",
+    "userId": "0057Q000000YPg7QAG"
+  },
+  "tests": [
+    {
+      "id": "07M7Q000000lcVpUAI",
+      "queueItemId": "7097Q000000XsNVQA0",
+      "stackTrace": null,
+      "message": null,
+      "asyncApexJobId": "7077Q00000HpmbyQAB",
+      "methodName": "executeMethod",
+      "outcome": "Pass",
+      "apexLogId": "07L7Q000001m1SzUAI",
+      "apexClass": {
+        "id": "01p7Q00000E3xB7QAJ",
+        "name": "GeoLocationIntegrationTest",
+        "namespacePrefix": null,
+        "fullName": "GeoLocationIntegrationTest"
+      },
+      "runTime": 291,
+      "testTimestamp": "2022-05-01T21:34:02.000+0000",
+      "fullName": "GeoLocationIntegrationTest.executeMethod"
+    }
+  ]
+}
