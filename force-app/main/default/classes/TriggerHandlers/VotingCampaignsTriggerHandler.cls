@@ -24,7 +24,7 @@ public with sharing class VotingCampaignsTriggerHandler extends CustomMDTTrigger
      */
     public override void afterDelete(){
         PublicGroupUtils.deleteGroups(
-            Trigger.New
+            Trigger.Old
         );
     }
 }

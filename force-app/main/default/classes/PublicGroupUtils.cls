@@ -62,7 +62,7 @@ public with sharing class PublicGroupUtils {
                 groupsToDelete.add('CMP-' +campaign.NumberOfCampaign__c +'-' + role);
             }
         } 
-
+        
         try{
         delete [SELECT Name FROM Group WHERE Name IN :groupsToDelete];
         }catch(DmlException e){
