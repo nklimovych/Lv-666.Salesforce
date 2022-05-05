@@ -42,11 +42,9 @@ public with sharing class PublicGroupUtils {
         Set<Id> configuratorGroupsId = new Set<Id>();
         for(Group tempGroup: createdPublicGroups){
             if(tempGroup?.Name.contains('Configurators')){
-            
                 configuratorGroupsId.add(
-                tempGroup.Id
+                    tempGroup.Id
                 );
-            
             }
         }
         return configuratorGroupsId;
@@ -63,7 +61,7 @@ public with sharing class PublicGroupUtils {
             for(String role: GROUP_ROLES){
                 groupsToDelete.add('CMP-' +campaign.NumberOfCampaign__c +'-' + role);
             }
-        }
+        } 
 
         try{
         delete [SELECT Name FROM Group WHERE Name IN :groupsToDelete];

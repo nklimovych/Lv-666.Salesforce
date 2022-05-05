@@ -9,14 +9,12 @@ public with sharing class GroupMemberUtilsTest {
         Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Online' LIMIT 1].Id;
 
         campaignsList.add(new Voting_Campaign__c(
-            RecordTypeId=recordTypeId, 
-            Name='Test', 
-            Voting_Start_Date__c = Date.today(), 
-            Voting_Status__c = 'New'
+                RecordTypeId=recordTypeId, 
+                Name='Test', 
+                Voting_Start_Date__c = Date.today(), 
+                Voting_Status__c = 'New'
             )
         );
-        
-        
         insert campaignsList;
     }
     

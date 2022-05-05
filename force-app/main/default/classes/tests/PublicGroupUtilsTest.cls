@@ -35,7 +35,7 @@ private class PublicGroupUtilsTest {
 
         List<Group> actualGroups = [SELECT Name FROM Group WHERE Name LIKE :groupNames];
         System.assertEquals(4, actualGroups.size());
-
+        
     }
     
     /**
