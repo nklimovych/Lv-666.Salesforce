@@ -3,6 +3,8 @@
  */
 @isTest
 public with sharing class AddConfiguratorsQueueableTest {
+    //number of items to insert
+    private static final Integer NUMBER_OF_INSERTS = 20;
     /**
      * @description setup description
      */ 
@@ -11,7 +13,7 @@ public with sharing class AddConfiguratorsQueueableTest {
         //creating and inserting initial list of campaigns
         List<Voting_Campaign__c> campaigns = new List<Voting_Campaign__c>();
         //20 items to check bulk insert
-        for(Integer i = 0; i < 20; i++){
+        for(Integer i = 0; i < AddConfiguratorsQueueableTest.NUMBER_OF_INSERTS; i++){
             campaigns.add(new Voting_Campaign__c(Campaign_Name__c='Test' + i));
         }
         Test.startTest();
@@ -33,6 +35,6 @@ public with sharing class AddConfiguratorsQueueableTest {
         //creating list of Id for test groups of configurator
         List<Id> groupsId = new List<Id>();
         //finding number of group member in test groups of configurator
-        System.assertEquals(20, [SELECT COUNT() FROM GroupMember WHERE GroupId in :groupsId]);
+        System.assertEquals(AddConfiguratorsQueueableTest.NUMBER_OF_INSERTS, [SELECT COUNT() FROM GroupMember WHERE GroupId in :groupsId]);
     }
 }
