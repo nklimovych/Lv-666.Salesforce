@@ -1,4 +1,6 @@
-
+/**
+ * contains tests for VotingCampaignUtil class
+ */
 @isTest
 public with sharing class VotingCampaignUtilTest {
     /**
@@ -22,8 +24,7 @@ public with sharing class VotingCampaignUtilTest {
         //creating name for test groups
         String nameOfGroups = '%' + campaign.Name + '%';
         //finding number of test group
-        Integer numberOfGroup = [SELECT COUNT() FROM Group WHERE Name LIKE :nameOfGroups];
-        System.assertEquals(4, numberOfGroup);
+        System.assertEquals(4, [SELECT COUNT() FROM Group WHERE Name LIKE :nameOfGroups]);
     }   
     /**
      * @description test metod for deleteGroupsAfterDeleteCampaign metod
@@ -31,13 +32,12 @@ public with sharing class VotingCampaignUtilTest {
     @isTest
     static void deleteGroupsAfterDeleteCampaign(){
         //creating test campaign
-        Voting_Campaign__c campaignForDelete = [SELECT Name FROM Voting_Campaign__c WHERE Campaign_Name__c = 'Test' LIMIT 1];
+        Voting_Campaign__c campaignToDelete = [SELECT Name FROM Voting_Campaign__c WHERE Campaign_Name__c = 'Test' LIMIT 1];
         //creating name for test groups
-        String nameOfGroups = '%' + campaignForDelete.Name + '%';
+        String groupsNames = '%' + campaignToDelete.Name + '%';
         //deleting test campaign
-        delete campaignForDelete;
+        delete campaignToDelete;
         //finding number of left test groupі
-        Integer numberOfGroup = [SELECT COUNT() FROM Group WHERE Name LIKE :nameOfGroups];
-        System.assertEquals(0, numberOfGroup);
+        System.assertEquals(0, [SELECT COUNT() FROM Group WHERE Name LIKE :groupsNames]);
     }
 }
