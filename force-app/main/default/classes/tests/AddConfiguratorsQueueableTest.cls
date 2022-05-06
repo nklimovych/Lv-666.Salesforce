@@ -33,7 +33,7 @@ public with sharing class AddConfiguratorsQueueableTest {
         //creating list of test groups of configurator
         List<Group> groups = [SELECT Id FROM Group WHERE Name IN :groupsNames];
         //creating list of Id for test groups of configurator
-        List<Id> groupsId = new List<Id>();
+        Set<Id> groupsId = (new Map<Id,Group>(groups)).keySet();
         //finding number of group member in test groups of configurator
         System.assertEquals(AddConfiguratorsQueueableTest.NUMBER_OF_INSERTS, [SELECT COUNT() FROM GroupMember WHERE GroupId in :groupsId]);
     }
