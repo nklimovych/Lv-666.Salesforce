@@ -2,7 +2,7 @@
  * contains tests for AddConfiguratorsQueueable class
  */
 @isTest
-public with sharing class AddConfiguratorsQueueableTest {
+public with sharing class AddConfiguratorsQueueableTest implements HttpCalloutMock{
     //number of items to insert
     private static final Integer NUMBER_OF_INSERTS = 20;
     /**
