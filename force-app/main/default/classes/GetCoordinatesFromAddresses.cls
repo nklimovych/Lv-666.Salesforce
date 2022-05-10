@@ -17,23 +17,9 @@ public without sharing class GetCoordinatesFromAddresses implements Queueable, D
             Http http = new Http();
             HttpResponse response = http.send(request);
             if(response.getStatusCode() == 200) {
-                Double lat;
-                Double lng;
-                JSONParser parser = JSON.createParser(response.getBody());
-                while (parser.nextToken() != null) {
-                    if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
-                        (parser.getText() == 'geometry')) {
-                        // Get the value.
-                        parser.nextToken();
-                        parser.nextToken();
-                        parser.nextToken();
-                        // Compute the grand total price for all invoices.
-                        lat = parser.getDoubleValue();
-                        parser.nextToken();
-                        parser.nextToken();
-                        lng = parser.getDoubleValue();
-                    }
-                }
+                Map<String, Object> coordinateValuesMap = parseJSON((Map<String, Object>)JSON.deserializeUntyped(response.getBody()));
+                Double lat = getCoordinates(coordinateValuesMap, 'lat');
+                Double lng = getCoordinates(coordinateValuesMap, 'lng');
                 UpdateVoteCampaignLocationCoordinates updcoordinatesjob = new UpdateVoteCampaignLocationCoordinates(votecamplocid, lat, lng);
                 ID updcoordinatesjobid = System.enqueueJob(updcoordinatesjob);
                 //AsyncApexJob updcoordinatesjob_log = [SELECT Id, Status, NumberOfErrors FROM AsyncApexJob WHERE Id = :updcoordinatesjobid];
@@ -42,5 +28,16 @@ public without sharing class GetCoordinatesFromAddresses implements Queueable, D
                 System.debug('Ivalid request: ' + response.getStatusCode());
             }
         }
+    }
+
+    public Map<String, Object> parseJSON(Map<String, Object> responseMap) {
+        List<Object> listOfResponses = (List<Object>) responseMap.get('results');
+        Map<String, Object> resultsValues = (Map<String, Object>) listOfResponses.get(0);
+        return (Map<String, Object>) resultsValues.get('geometry');
+    }
+
+    public Double getCoordinates(Map<String, Object> parsedJSON, String fieldName) {
+        Double geometryCoordinates = (Double) parsedJSON.get(fieldName);
+        return geometryCoordinates;
     }
 }

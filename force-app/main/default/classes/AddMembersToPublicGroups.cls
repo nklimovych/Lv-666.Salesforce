@@ -11,7 +11,6 @@ public without sharing class AddMembersToPublicGroups implements Queueable {
     */
     public AddMembersToPublicGroups(List<Group> publicgroups) {
         this.publicgroups = publicgroups;
-        System.debug('AddMembersToPublicGroups Started...');
     }
     /*
     * @description method that configure apex queueable job for create GroupMember object

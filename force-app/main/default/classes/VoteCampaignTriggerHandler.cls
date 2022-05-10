@@ -9,7 +9,6 @@ public without sharing class VoteCampaignTriggerHandler extends CustomMDTTrigger
     */
     public VoteCampaignTriggerHandler(List<VoteCampaign__c> newcampaigns) {
         this.newcampaigns = newcampaigns;
-        System.debug('VoteCampaignTriggerHandler started...');
     }
     /*
     * @description constructor that used for catch list of VoteCampaigns__c sObjects (records) from VoteCampaignTrigger

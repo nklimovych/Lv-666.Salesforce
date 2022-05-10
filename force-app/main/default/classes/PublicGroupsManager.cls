@@ -14,7 +14,6 @@ public without sharing class PublicGroupsManager {
     * @param list of VoteCampaign__c sObjects
     */
     public static void createPublicGroups(List<VoteCampaign__c> newcampaigns) {
-        System.debug('createPublicGroups method started...');
         CreatePublicGroups creategroupsjob = new CreatePublicGroups(newcampaigns);
         ID creategroupsjobid = System.enqueueJob(creategroupsjob);
         //AsyncApexJob creategroupsjob_log = [SELECT Id, Status, NumberOfErrors FROM AsyncApexJob WHERE Id = :creategroupsjobid];
