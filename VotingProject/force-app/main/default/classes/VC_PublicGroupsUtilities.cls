@@ -32,7 +32,6 @@ public with sharing class VC_PublicGroupsUtilities {
             System.debug('The following exception has occurred: ' + e.getMessage());
         }
     }
-
 /*
     @description: This method is designed for deleting public groups after campaign deletion
     @param oldCampaigns The list of deleted campaigns
