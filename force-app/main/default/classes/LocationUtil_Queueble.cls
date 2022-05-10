@@ -25,7 +25,7 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
     public void execute(QueueableContext context){
         List<Location_for_Campaing__c> locationsToUpdate = new List<Location_for_Campaing__c>();
         for (Location_for_Campaing__c location : locations) {
-            Location_for_Campaing__c locationToUpdate = updatedLocation(location.clone(true, false, false, false));
+            Location_for_Campaing__c locationToUpdate = addCoordinate(location.clone(true, false, false, false));
             locationsToUpdate.add(locationToUpdate);
         }
         try {
@@ -39,7 +39,7 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
      * @param  location location that need to be updated
      * @return updated location 
      */
-    public Location_for_Campaing__c updatedLocation(Location_for_Campaing__c location){
+    public Location_for_Campaing__c addCoordinate(Location_for_Campaing__c location){
         String encodedAddress = EncodingUtil.urlEncode(addressOfLocation(location), 'UTF-8');
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -58,17 +58,22 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
      * @return string format of adress  
      */
     public String addressOfLocation(Location_for_Campaing__c location){
-        String address = location.Country__c + ',';
+        String address = '';
+        if (location.Street__c!=null) {
+            address += location.Street__c + ',';
+        }       
+        if (location.State__c!=null) {
+            address += location.State__c + ',';
+        }        
+        if (location.City__c!=null) {
+        	address += location.City__c;
+        }  
         if (location.Zip__c!=null) {
             address += location.Zip__c + ',';
         }
-        if (location.State__c!=null) {
-            address += location.State__c + ',';
+        if (location.Country__c!=null) {
+            address += location.Country__c ;
         }
-        if (location.City__c!=null) {
-            address += location.City__c + ',';
-        }
-        address += location.Street__c;
         return address;
     }
     /**
@@ -78,12 +83,10 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
      * @return coordinate  
      */
     public Double getCoordinateFromJSON(Map<String, Object> JSONResult, String typeOfCoordinate){
-        Double coordinate;
         List<Object> results = (List<Object>) JSONResult.get('results');
         Map<String, Object> allMap = (Map<String, Object>)results[0];
-        Map<String, Object> bounds = (Map<String, Object>) allMap.get('bounds');
-        Map<String, Object> northeast = (Map<String, Object>) bounds.get('northeast');
-        return (Double)northeast.get(typeOfCoordinate);
+        Map<String, Object> geometry = (Map<String, Object>) allMap.get('geometry');        
+        return (Double)geometry.get(typeOfCoordinate);
     }
     /**
      * @description checks for changes of updated location
