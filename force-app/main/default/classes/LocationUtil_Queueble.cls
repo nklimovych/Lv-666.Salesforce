@@ -40,7 +40,7 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
      * @return updated location 
      */
     public Location_for_Campaing__c addCoordinate(Location_for_Campaing__c location){
-        String encodedAddress = EncodingUtil.urlEncode(addressOfLocation(location), 'UTF-8');
+        String encodedAddress = EncodingUtil.urlEncode(locationAddress(location), 'UTF-8');
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint('https://api.opencagedata.com/geocode/v1/json?q=' + encodedAddress + '&key=' + KEY);
@@ -57,7 +57,7 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
      * @param location adress of that location returned 
      * @return string format of adress  
      */
-    public String addressOfLocation(Location_for_Campaing__c location){
+    public String locationAddress(Location_for_Campaing__c location){
         String address = '';
         if (location.Street__c!=null) {
             address += location.Street__c + ',';
@@ -82,11 +82,11 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
      * @param typeOfCoordinate type of coordinate
      * @return coordinate  
      */
-    public Double getCoordinateFromJSON(Map<String, Object> JSONResult, String typeOfCoordinate){
+    public Double getCoordinateFromJSON(Map<String, Object> JSONResult, String CoordinateType){
         List<Object> results = (List<Object>) JSONResult.get('results');
         Map<String, Object> allMap = (Map<String, Object>)results[0];
         Map<String, Object> geometry = (Map<String, Object>) allMap.get('geometry');        
-        return (Double)geometry.get(typeOfCoordinate);
+        return (Double)geometry.get(CoordinateType);
     }
     /**
      * @description checks for changes of updated location
