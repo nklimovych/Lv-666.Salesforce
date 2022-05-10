@@ -1,7 +1,17 @@
+    /*
+    * This class implementing trigger handler to handle logic of the VoteCampaignLocationTrigger.
+    */
 public without sharing class VoteCampaignLocationTriggerHandler extends CustomMDTTriggerHandler {
     public List<VoteCampaignLocation__c> newLocations;
     public Map<Id,VoteCampaignLocation__c> newLocationsMap;
     public Map<Id,VoteCampaignLocation__c> oldLocationsMap;
+    /*
+    * @description constructor that used for declare and assign list of VoteCampaignLocation__c sObjects (records)
+    * and mapped new and old VoteCampaignLocation__c sObjects (records)
+    * @param list of VoteCampaignLocation__c sObjects (records) which created after trigger activation
+    * @param mapped new VoteCampaignLocation__c sObjects (records) which created after trigger activation
+    * @param mapped old VoteCampaignLocation__c sObjects (records) which existed before trigger activation
+    */
     public VoteCampaignLocationTriggerHandler(List<VoteCampaignLocation__c> newLocs, 
                                               Map<Id,VoteCampaignLocation__c> newLocMap, 
                                               Map<Id,VoteCampaignLocation__c> oldLocMap) {
@@ -9,13 +19,19 @@ public without sharing class VoteCampaignLocationTriggerHandler extends CustomMD
         this.newLocationsMap = newLocMap;
         this.oldLocationsMap = oldLocMap;
     }
-
+    /*
+    * @description constructor that used for catch list of VoteCampaignLocation__c sObjects (records)
+    * and mapped new and old VoteCampaignLocation__c sObjects (records) from VoteCampaignLocationTrigger
+    */
     public VoteCampaignLocationTriggerHandler() {
         this((List<VoteCampaignLocation__c>)Trigger.new, 
             (Map<Id,VoteCampaignLocation__c>)Trigger.newMap, 
             (Map<Id,VoteCampaignLocation__c>)Trigger.oldMap);
     }
-
+    /*
+    * @description method that invoke updateCoordinates() method from the VoteCampaignLocationsManager class
+    * in case of the trigger event afterInsert has occured and conditions of the if statements were met
+    */
     public override void afterInsert() {
         Boolean fieldsFilled = False;
         for(VoteCampaignLocation__c loc : newLocations) {
@@ -28,7 +44,10 @@ public without sharing class VoteCampaignLocationTriggerHandler extends CustomMD
         }   
 
     }
-
+    /*
+    * @description method that invoke updateCoordinates() method from the VoteCampaignLocationsManager class
+    * in case of the trigger event afterUpdate has occured and conditions of the if statements were met
+    */
     public override void afterUpdate() {
         Boolean addressHasChanged = False;
         for(Id locationId : newLocationsMap.keySet()) {
