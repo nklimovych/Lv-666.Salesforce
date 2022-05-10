@@ -27,12 +27,12 @@ public with sharing class VotingCampaignTriggerHandler extends CustomMDTTriggerH
         VC_PublicGroupsUtilities.createPublicGroups(Trigger.new);
     }
 
-    // Invokes method that delete public groups after campaign deleting
+    // Invokes method that deletes public groups after campaign deleting
     public override void afterDelete(){
         VC_PublicGroupsUtilities.deletePublicGroups(Trigger.old);
     }
 
-    // Invokes method that create public groups after campaign restoring
+    // Invokes method that creates public groups after campaign restoring
     public override void afterUndelete(){
         VC_PublicGroupsUtilities.createPublicGroups(Trigger.new);
     }

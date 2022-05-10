@@ -31,6 +31,9 @@ public with sharing class VC_PublicGroupsUtilities {
         catch(DmlException e){
             System.debug('The following exception has occurred: ' + e.getMessage());
         }
+        // Invokes method for adding user to public group as configurator
+        VC_MembersUtilities_Queueble addConfigurator = new VC_MembersUtilities_Queueble(groupsToBeCreated);
+        System.enqueueJob(addConfigurator);
     }
 
 /*
