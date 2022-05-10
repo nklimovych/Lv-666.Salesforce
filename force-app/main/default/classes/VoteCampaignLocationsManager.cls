@@ -3,9 +3,9 @@ public without sharing class VoteCampaignLocationsManager {
     }
 
     public static void updateCoordinates(List<VoteCampaignLocation__c> newLocations) {
-        GetCoordinatesFromAddresses getcoordinatesjob = new GetCoordinatesFromAddresses(newLocations);
-        ID getcoordinatesjobid = System.enqueueJob(getcoordinatesjob);
-        //AsyncApexJob getcoordinatesjob_log = [SELECT Id, Status, NumberOfErrors FROM AsyncApexJob WHERE Id = :getcoordinatesjobid];
-        //System.debug('Get coordinates job log: ' + getcoordinatesjob_log);
+        GetCoordinatesFromAddresses getCoordinatesJob = new GetCoordinatesFromAddresses(newLocations);
+        ID getCoordinatesJobId = System.enqueueJob(getCoordinatesJob);
+        //AsyncApexJob getCoordinatesJob_Log = [SELECT Id, Status, NumberOfErrors FROM AsyncApexJob WHERE Id = :getCoordinatesJobId];
+        //System.debug('Get coordinates job log: ' + getCoordinatesJob_Log);
     }
 }

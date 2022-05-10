@@ -13,10 +13,10 @@ public without sharing class SendEmails implements Queueable {
     * @param(subject) contains subject of the email notification message
     * @param(body) contains body of the email notification message 
     */
-    public SendEmails(String address, String subject, String body) {
-        this.address = address;
-        this.subject = subject;
-        this.body = body;
+    public SendEmails(String newAddress, String newSubject, String newBody) {
+        this.address = newAddress;
+        this.subject = newSubject;
+        this.body = newBody;
     }
     /*
     * @description method that configure apex queueable job to send email notifications

@@ -2,15 +2,15 @@
 * Class contains method that configure apex queueable job for create GroupMember object
 * records related to public groups defined in list of Group sObjects
 */
-public without sharing class AddMembersToPublicGroups implements Queueable {
-    private List<Group> publicgroups;
+public without sharing class ManagePublicGroupsMembers implements Queueable {
+    private List<Group> publicGroups;
     /*
     * @description class constructor that collect list of appropriate Group sObjects from CreatePublicGroups class
     * and assign it to the publicgroups variable
     * @param list of Group sObjects from CreatePublicGroups class
     */
-    public AddMembersToPublicGroups(List<Group> publicgroups) {
-        this.publicgroups = publicgroups;
+    public ManagePublicGroupsMembers(List<Group> newPublicGroups) {
+        this.publicGroups = newPublicGroups;
     }
     /*
     * @description method that configure apex queueable job for create GroupMember object
@@ -23,21 +23,30 @@ public without sharing class AddMembersToPublicGroups implements Queueable {
     */
     public void execute(QueueableContext context) {
         try {
-            List<GroupMember> groupmembers = new List<GroupMember>();
-                for (Group publicgroup : publicgroups) {
+            List<GroupMember> groupMembers = new List<GroupMember>();
+            for (Group publicGroup : publicGroups) {
                 GroupMember gm = new GroupMember();
-                gm.GroupId = publicgroup.Id;
+                gm.GroupId = publicGroup.Id;
                 gm.UserOrGroupId = UserInfo.getUserId();
-                groupmembers.add(gm);
-                String useremail = UserInfo.getUserEmail();
-                EmailManager.sendMail(useremail, 'You have been added to public group ' + publicgroup.Name + 
-                '.', 'Congritulations, you have been added to public group ' + publicgroup.Name + 
-                ' as a group member.' + '\nFor more details, please contact your system administrator.');
-                }
-            insert groupmembers;
+                groupMembers.add(gm);
+                String userEmail = UserInfo.getUserEmail();
+                EmailManager.sendMail(userEmail, concEmailSubj(publicGroup.Name), concEmailBody(publicGroup.Name));
+            }
+            insert groupMembers;
 
         } catch (DmlException e) {
             System.debug('An error has occurred while adding members to the public groups: ' + e.getMessage());
         }
+    }
+
+    public String concEmailSubj(String groupName) {
+        String emailSubject = 'You have been added to public group ' + groupName + '.';
+        return emailSubject;
+    }
+
+    public String concEmailBody(String grpName) {
+        String emailBody = 'Congritulations, you have been added to public group ' + grpName + 
+        ' as a group member.\nFor more details, please contact your system administrator.';
+        return emailBody;
     }
 }

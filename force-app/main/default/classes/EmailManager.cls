@@ -12,10 +12,10 @@ public without sharing class EmailManager {
     * Commented rows contains code for apex queueble job debugging
     */
     public static void sendMail (String address, String subject, String body) {
-        SendEmails sendemailsjob = new SendEmails(address, subject, body);
-        ID sendemailsjobid = System.enqueueJob(sendemailsjob);
-        // AsyncApexJob sendemailsjob_log = [SELECT Id, Status, NumberOfErrors FROM AsyncApexJob WHERE Id = :sendemailsjobid];
-        // System.debug('Add members job log: ' + sendemailsjob_log);
+        SendEmails sendEmailsJob = new SendEmails(address, subject, body);
+        ID sendEmailsJobId = System.enqueueJob(sendEmailsJob);
+        // AsyncApexJob sendEmailsJob_Log = [SELECT Id, Status, NumberOfErrors FROM AsyncApexJob WHERE Id = :sendEmailsJobId];
+        // System.debug('Add members job log: ' + sendEmailsJob_Log);
     }
 
 }

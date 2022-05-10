@@ -2,13 +2,13 @@
     * This class implementing trigger handler to handle logic of the VoteCampaignTrigger.
     */
 public without sharing class VoteCampaignTriggerHandler extends CustomMDTTriggerHandler {
-    public List<VoteCampaign__c> newcampaigns = new List<VoteCampaign__c>();
+    public List<VoteCampaign__c> newCampaigns = new List<VoteCampaign__c>();
     /*
     * @description constructor that used for declare and assign list of VoteCampaigns__c sObjects (records)
     * @param list of VoteCampaigns__c sObjects (records) which created after trigger activation
     */
-    public VoteCampaignTriggerHandler(List<VoteCampaign__c> newcampaigns) {
-        this.newcampaigns = newcampaigns;
+    public VoteCampaignTriggerHandler(List<VoteCampaign__c> newCamps) {
+        this.newCampaigns = newCamps;
     }
     /*
     * @description constructor that used for catch list of VoteCampaigns__c sObjects (records) from VoteCampaignTrigger
@@ -21,6 +21,6 @@ public without sharing class VoteCampaignTriggerHandler extends CustomMDTTrigger
     and passes as an argument list of VoteCampaign__c sObjects
     */
     public override void afterInsert() {
-        PublicGroupsManager.createPublicGroups(newcampaigns);
+        PublicGroupsManager.createPublicGroups(newCampaigns);
     }
 }
