@@ -20,9 +20,10 @@ public with sharing class VC_MembersUtilities_Queueble implements Queueable {
     */
     public void execute(QueueableContext context) {
         List<GroupMember> configurators = new List<GroupMember>();
+        Id configuratorId = UserInfo.GetUserId();
         for (Group newGroup: newGroups){
             if (newGroup?.name?.contains('Configurators')){
-                configurators.add(new GroupMember(GroupId=newGroup.Id, UserOrGroupId=UserInfo.GetUserId()));
+                configurators.add(new GroupMember(GroupId=newGroup.Id, UserOrGroupId=configuratorId));
             }
         }
         try{
