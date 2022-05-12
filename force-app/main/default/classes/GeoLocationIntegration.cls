@@ -23,18 +23,15 @@ public with sharing class GeoLocationIntegration implements Queueable, Database.
         
             if(response.getStatusCode() == 200){
                 Map<String, Object> coordinateValuesMap = parseJSON((Map<String, Object>)JSON.deserializeUntyped(response.getBody()));  
-                
                 updatedLocation.Location_lat__c = getFirstCoordinate(coordinateValuesMap);
                 updatedLocation.Location_lng__c = getSecondCoordinate(coordinateValuesMap);
-                System.debug(updatedLocation.Location_lat__c);
-                System.debug(updatedLocation.Location_lng__c);
                 locationsToUpdate.add(updatedLocation);
             }
         }
 
         try{
         update locationsToUpdate;
-        } catch(Exception e){
+        } catch(Exception e) {
             ExceptionUtility error = new ExceptionUtility(e);
             System.enqueueJob(error);
         }
@@ -54,17 +51,13 @@ public with sharing class GeoLocationIntegration implements Queueable, Database.
     * Getting the first coordinate value from parsedJSON
     */
     public String getFirstCoordinate(Map<String, Object> parsedJSON){
-        Decimal geometryLatitude = (Decimal) parsedJSON.get('lat');
-        return String.valueOf(geometryLatitude);
-        //return (String) parsedJSON.get('lat');
+        return (String) parsedJSON.get('lat');
     }
 
     /*
     * Getting the second coordinate value from parsedJSON
     */
     public String getSecondCoordinate(Map<String, Object> parsedJSON){
-        Decimal geometryLatitude = (Decimal) parsedJSON.get('lng');
-        return String.valueOf(geometryLatitude);
-        //return (String) parsedJSON.get('lng');
+        return (String) parsedJSON.get('lng');
     }
 }
