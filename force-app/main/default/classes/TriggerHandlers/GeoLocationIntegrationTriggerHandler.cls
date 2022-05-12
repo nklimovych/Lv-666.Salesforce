@@ -23,16 +23,16 @@ public with sharing class GeoLocationIntegrationTriggerHandler extends CustomMDT
      */
     public override void afterUpdate(){
         List<Voting_Location__c> locationsToUpdate = filterRecords(Trigger.New);
-        if(locationsToUpdate.size() > 0){
+        if(locationsToUpdate.isEmpty()) { return; }
+
         System.enqueueJob(
             new GeoLocationIntegration(
-                    key, locationsToUpdate
-                )
-            );
-        } 
-        else{ return; }
-    }
-
+                key, locationsToUpdate
+            )
+        );
+    } 
+    
+    
     /**
      * @description Method checks whether the fields of the record have changed after the update
      * @param newRecords - after update records
