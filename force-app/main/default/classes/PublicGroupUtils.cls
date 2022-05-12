@@ -64,7 +64,7 @@ public with sharing class PublicGroupUtils {
         } 
         
         try{
-        delete [SELECT Name FROM Group WHERE Name IN :groupsToDelete];
+            delete [SELECT Name FROM Group WHERE Name IN :groupsToDelete];
         }catch(DmlException e){
             System.debug('The following exception has occurred: ' + e.getMessage());
         }
