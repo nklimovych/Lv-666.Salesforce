@@ -15,11 +15,12 @@ public with sharing class GroupMemberUtils implements Queueable{
      */
     public void execute(QueueableContext context){
         List<GroupMember> usersToBeInserted = new List<GroupMember>();
+        Id currentUserId = UserInfo.getUserId();
         for(Id groupId: configuratorGroupsId){
             usersToBeInserted.add(
                 new GroupMember(
                     GroupId = groupId,
-                    UserOrGroupId = UserInfo.getUserId()
+                    UserOrGroupId = currentUserId
                 )
             );
         }
