@@ -31,6 +31,10 @@ private class PublicGroupUtilsTest {
         }
 
         List<Group> actualGroups = [SELECT Name FROM Group WHERE Name LIKE :groupNames];
+        /** 
+         * The number of expected groups should be 4 because for each voting_campaign__c
+         * trigger should create 4 public groups
+         */
         System.assertEquals(4, actualGroups.size());
     }
     
@@ -53,7 +57,7 @@ private class PublicGroupUtilsTest {
         }
         
         delete campaigns;
-
+        
         List<Group> actualGroups = [SELECT Name FROM Group WHERE Name LIKE :removedGroupsNames]; 
         System.assertEquals(0, actualGroups.size());
     }
