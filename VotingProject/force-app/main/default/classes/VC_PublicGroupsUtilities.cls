@@ -4,7 +4,7 @@
     @description: This class is designed for creating/deleting public groups for each
                   voting campaign user role after campaign creation/deletion
 */
-public without sharing class VC_PublicGroupsUtilities {
+public with sharing class VC_PublicGroupsUtilities {
     // Set of VC user roles
     private final Set<String> USER_ROLES = new Set<String>{
         'Configurators',
