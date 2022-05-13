@@ -35,12 +35,9 @@ public with sharing class GroupMemberUtilsTest {
         }
 
         List<Group> createdGroups = [SELECT Id FROM Group WHERE Name LIKE :groupNames];
-        List<Id> newGroupId = new List<Id>();
-        for(Group currGroup: createdGroups){
-            newGroupId.add(currGroup.Id);
-        }
+        Set<Id> newGroupsId = (new Map<Id,Sobject>(createdGroups)).keySet();
 
-        List<GroupMember> actualGroupMembers = [SELECT GroupId FROM GroupMember WHERE GroupId IN :newGroupId];
+        List<GroupMember> actualGroupMembers = [SELECT GroupId FROM GroupMember WHERE GroupId IN :newGroupsId];
         System.assertEquals(1, actualGroupMembers.size());
     }
 }
