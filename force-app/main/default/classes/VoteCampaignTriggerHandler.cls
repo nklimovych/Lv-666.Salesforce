@@ -1,6 +1,6 @@
-    /*
-    * This class implementing trigger handler to handle logic of the VoteCampaignTrigger.
-    */
+/*
+* This class implementing trigger handler to handle logic of the VoteCampaignTrigger.
+*/
 public without sharing class VoteCampaignTriggerHandler extends CustomMDTTriggerHandler {
     public List<VoteCampaign__c> newCampaigns = new List<VoteCampaign__c>();
     /*

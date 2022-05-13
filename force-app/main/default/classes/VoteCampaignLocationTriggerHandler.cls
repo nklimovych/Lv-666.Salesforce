@@ -1,6 +1,6 @@
-    /*
-    * This class implementing trigger handler to handle logic of the VoteCampaignLocationTrigger.
-    */
+/*
+* This class implementing trigger handler to handle logic of the VoteCampaignLocationTrigger.
+*/
 public without sharing class VoteCampaignLocationTriggerHandler extends CustomMDTTriggerHandler {
     public List<VoteCampaignLocation__c> newLocations;
     public Map<Id,VoteCampaignLocation__c> newLocationsMap;
@@ -34,13 +34,15 @@ public without sharing class VoteCampaignLocationTriggerHandler extends CustomMD
     */
     public override void afterInsert() {
         Boolean fieldsFilled = False;
+        List<VoteCampaignLocation__c> locsNeedUpdate = new List<VoteCampaignLocation__c>();
         for(VoteCampaignLocation__c loc : newLocations) {
             if(loc.Street__c != Null && loc.City__c != Null && loc.Country__c != Null) {
                 fieldsFilled = True;
+                locsNeedUpdate.add(loc);
             }
         }
         if(fieldsFilled == True) {
-            VoteCampaignLocationsManager.updateCoordinates(newLocations);
+            VoteCampaignLocationsManager.updateCoordinates(locsNeedUpdate);
         }   
 
     }
@@ -50,6 +52,7 @@ public without sharing class VoteCampaignLocationTriggerHandler extends CustomMD
     */
     public override void afterUpdate() {
         Boolean addressHasChanged = False;
+        List<VoteCampaignLocation__c> locationsNeedUpdate = new List<VoteCampaignLocation__c>();
         for(Id locationId : newLocationsMap.keySet()) {
             if(newLocationsMap.get(locationId).City__c != Null 
             && newLocationsMap.get(locationId).Country__c != Null) {
@@ -57,11 +60,12 @@ public without sharing class VoteCampaignLocationTriggerHandler extends CustomMD
                 oldLocationsMap.get(locationId).City__c != newLocationsMap.get(locationId).City__c || 
                 oldLocationsMap.get(locationId).Country__c != newLocationsMap.get(locationId).Country__c) {
                     addressHasChanged = True;
+                    locationsNeedUpdate.add(newLocationsMap.get(locationId));
                 }
             }
         }
         if (addressHasChanged == True) {
-            VoteCampaignLocationsManager.updateCoordinates(newLocations);
+            VoteCampaignLocationsManager.updateCoordinates(locationsNeedUpdate);
         }
         
     }

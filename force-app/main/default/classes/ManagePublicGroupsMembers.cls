@@ -24,12 +24,13 @@ public without sharing class ManagePublicGroupsMembers implements Queueable {
     public void execute(QueueableContext context) {
         try {
             List<GroupMember> groupMembers = new List<GroupMember>();
+            Id userId = UserInfo.getUserId();
+            String userEmail = UserInfo.getUserEmail();
             for (Group publicGroup : publicGroups) {
                 GroupMember gm = new GroupMember();
                 gm.GroupId = publicGroup.Id;
-                gm.UserOrGroupId = UserInfo.getUserId();
+                gm.UserOrGroupId = userId;
                 groupMembers.add(gm);
-                String userEmail = UserInfo.getUserEmail();
                 EmailManager.sendMail(userEmail, concEmailSubj(publicGroup.Name), concEmailBody(publicGroup.Name));
             }
             insert groupMembers;
@@ -44,8 +45,7 @@ public without sharing class ManagePublicGroupsMembers implements Queueable {
     * @return Subject email message that concatinated with the name of the public group
     */
     public String concEmailSubj(String groupName) {
-        String emailSubject = 'You have been added to public group ' + groupName + '.';
-        return emailSubject;
+        return 'You have been added to public group ' + groupName + '.';
     }
     /*
     * @description method that concatinate Body email message with the name of the public group
@@ -53,8 +53,7 @@ public without sharing class ManagePublicGroupsMembers implements Queueable {
     * @return Body email message that concatinated with the name of the public group
     */
     public String concEmailBody(String grpName) {
-        String emailBody = 'Congritulations, you have been added to public group ' + grpName + 
+        return 'Congritulations, you have been added to public group ' + grpName + 
         ' as a group member.\nFor more details, please contact your system administrator.';
-        return emailBody;
     }
 }

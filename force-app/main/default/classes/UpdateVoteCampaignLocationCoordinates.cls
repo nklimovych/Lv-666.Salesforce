@@ -26,8 +26,11 @@ public without sharing class UpdateVoteCampaignLocationCoordinates implements Qu
     */
     public void execute (QueueableContext context) {
         try {
-            VoteCampaignLocation__c voteCampLocRec = [SELECT VoteCampaignLocationCoordinates__Latitude__s, VoteCampaignLocationCoordinates__Longitude__s
-            FROM VoteCampaignLocation__c WHERE Id = :voteCampaignLocationId];
+            VoteCampaignLocation__c voteCampLocRec = [
+                                                      SELECT VoteCampaignLocationCoordinates__Latitude__s, VoteCampaignLocationCoordinates__Longitude__s
+                                                      FROM VoteCampaignLocation__c 
+                                                      WHERE Id = :voteCampaignLocationId
+            ];
             voteCampLocRec.VoteCampaignLocationCoordinates__Latitude__s = latitude;
             voteCampLocRec.VoteCampaignLocationCoordinates__Longitude__s = longitude;
             update voteCampLocRec;

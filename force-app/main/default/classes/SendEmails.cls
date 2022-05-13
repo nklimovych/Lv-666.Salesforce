@@ -21,8 +21,6 @@ public without sharing class SendEmails implements Queueable {
     /*
     * @description method that configure apex queueable job to send email notifications
     * to the users who added to the appropriate public groups as group members 
-    * and catch the appropriate error if sending email notification message was unsuccessful with displaying an appropriate debug message
-    * with description about an error.
     * @param implements QueueableContext interface
     */
     public void execute (QueueableContext context) {
@@ -31,15 +29,7 @@ public without sharing class SendEmails implements Queueable {
         mail.setToAddresses(toAddresses);
         mail.setSubject(subject);
         mail.setPlainTextBody(body);
-        Messaging.SendEmailResult[] results = Messaging.sendEmail(
-                                 new Messaging.SingleEmailMessage[] { mail });
-        for (Messaging.SendEmailResult res : results) {
-            if (res.isSuccess()) {
-                System.debug('Email sent successfully');
-            }
-            else {
-                System.debug('The following errors occurred: ' + res.getErrors());                 
-            }
-        }
+        Messaging.sendEmail(
+        new Messaging.SingleEmailMessage[] { mail });
     }
 }

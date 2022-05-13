@@ -13,7 +13,6 @@ public without sharing class GetCoordinatesFromAddresses implements Queueable, D
     * @description method that configure apex queueable job for send http request to the OpenCageData API 
     * to get the coordinates of the address specified in the request.
     * Also, if request was successful, response Json file is parsing to get the coordinates and paste them into new queueable job
-    * Commented rows contains code for apex queueble job debugging
     * @param implements QueueableContext interface
     */
     public void execute (QueueableContext context) {
@@ -31,10 +30,7 @@ public without sharing class GetCoordinatesFromAddresses implements Queueable, D
                 Map<String, Object> coordinateValuesMap = parseJSON((Map<String, Object>)JSON.deserializeUntyped(response.getBody()));
                 Double lat = getCoordinates(coordinateValuesMap, 'lat');
                 Double lng = getCoordinates(coordinateValuesMap, 'lng');
-                UpdateVoteCampaignLocationCoordinates updCoordinatesJob = new UpdateVoteCampaignLocationCoordinates(voteCampLocId, lat, lng);
-                ID updCoordinatesJobId = System.enqueueJob(updCoordinatesJob);
-                //AsyncApexJob updCoordinatesJob_Log = [SELECT Id, Status, NumberOfErrors FROM AsyncApexJob WHERE Id = :updCoordinatesJobId];
-                //System.debug('Update coordinates job log: ' + updCoordinatesJob_Log);
+                System.enqueueJob(new UpdateVoteCampaignLocationCoordinates(voteCampLocId, lat, lng));
             } else {
                 System.debug('Ivalid request: ' + response.getStatusCode());
             }
@@ -58,7 +54,6 @@ public without sharing class GetCoordinatesFromAddresses implements Queueable, D
     * @return value of specified coordinates field with Double data type 
     */
     public Double getCoordinates(Map<String, Object> parsedJSON, String fieldName) {
-        Double geometryCoordinates = (Double) parsedJSON.get(fieldName);
-        return geometryCoordinates;
+        return (Double) parsedJSON.get(fieldName);
     }
 }
