@@ -66,7 +66,7 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
             address += location.State__c + ',';
         }        
         if (location.City__c!=null) {
-        	address += location.City__c;
+        	address += location.City__c + ',';
         }  
         if (location.Zip__c!=null) {
             address += location.Zip__c + ',';
@@ -89,24 +89,24 @@ public with sharing class LocationUtil_Queueble implements Queueable, Database.A
         return (Double)geometry.get(CoordinateType);
     }
     /**
-     * @description checks for changes of updated location
-     * @param oldLocations location before update
-     * @param newLocations updated location
-     * @return if changes are needed  
+     * @description checks for changes of updated locations
+     * @param oldLocations locations before update
+     * @param newLocations updated locations
+     * @return list of updated locations 
      */
-    public Boolean isUpdateNeeded(List<Location_for_Campaing__c> oldLocations, List<Location_for_Campaing__c> newLocations){
-        for (Location_for_Campaing__c oldLocation : oldLocations) {
-            for (Location_for_Campaing__c newLocation : newLocations) {
-                if (oldLocation.Id == newLocation.Id && 
-                    (oldLocation.City__c != newLocation.City__c  ||
-                    oldLocation.Country__c != newLocation.Country__c || 
-                    oldLocation.State__c != newLocation.State__c || 
-                    oldLocation.Street__c != newLocation.Street__c ||
-                    oldLocation.Zip__c != newLocation.Zip__c)) {
-                    return true;
-                }                             
-            }
+    public List<Location_for_Campaing__c> locationToUpdate(List<Location_for_Campaing__c> oldLocations, List<Location_for_Campaing__c> newLocations){
+        List<Location_for_Campaing__c> locationsToUpdate = new List<Location_for_Campaing__c>();
+        Map<Id,Location_for_Campaing__c> oldLocationsMap = new Map<Id,Location_for_Campaing__c>(oldLocations);
+        Map<Id,Location_for_Campaing__c> newLocationsMap = new Map<Id,Location_for_Campaing__c>(newLocations);
+        for (Id id : newLocationsMap.keySet()) {
+            if (oldLocationsMap.get(id).City__c != newLocationsMap.get(id).City__c  ||
+                oldLocationsMap.get(id).Country__c != newLocationsMap.get(id).Country__c || 
+                oldLocationsMap.get(id).State__c != newLocationsMap.get(id).State__c || 
+                oldLocationsMap.get(id).Street__c != newLocationsMap.get(id).Street__c ||
+                oldLocationsMap.get(id).Zip__c != newLocationsMap.get(id).Zip__c) {
+                locationsToUpdate.add(newLocationsMap.get(id));
+            }   
         }
-        return false;
+        return locationsToUpdate;
     }
 }

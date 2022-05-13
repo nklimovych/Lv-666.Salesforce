@@ -31,8 +31,8 @@ public with sharing class CampaingLocationTriggerHandler extends CustomMDTTrigge
      * Invokes method to update Latitude__c and Longitude__c fields in Location_for_Campaing__c
      */
     public override void afterUpdate(){    
-        if(new LocationUtil_Queueble().isUpdateNeeded(oldLocations, newLocations)){
-            System.enqueueJob(new LocationUtil_Queueble(newLocations));
-        }
+        //if(new LocationUtil_Queueble().isUpdateNeeded(oldLocations, newLocations)){
+        System.enqueueJob(new LocationUtil_Queueble(new LocationUtil_Queueble().locationToUpdate(oldLocations, newLocations)));
+        //}
     } 
 }

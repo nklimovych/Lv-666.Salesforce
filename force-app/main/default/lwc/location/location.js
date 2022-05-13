@@ -30,6 +30,6 @@ export default class Location extends LightningElement {
         }
     }
     get cardTitle() {
-    return (this.name) ? `${this.name}'s location` : 'Location';
-  }
+        return (this.name) ? `${this.name}'s location` : 'Location';
+    }
 }
