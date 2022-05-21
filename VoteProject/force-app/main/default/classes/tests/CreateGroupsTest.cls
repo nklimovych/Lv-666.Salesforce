@@ -32,10 +32,12 @@ public with sharing class CreateGroupsTest {
          * @param filteredCampaigns    Filtered list of campaigns
          */
     @isTest static void testCreateGroups() {
-        Map<ID, SObject> mapTestCampaignsId = new Map<ID, SObject>([SELECT ID FROM Campaign__c WHERE Name LIKE 'TestCampaign_%']);
+        Map<ID, SObject> mapTestCampaignsId = new Map<ID, SObject>([SELECT Id FROM Campaign__c 
+                                                                    WHERE Name LIKE 'TestCampaign_%']);
         Set<ID> setId = new Set<ID>(mapTestCampaignsId.keySet());
+        List<Campaign__c> campaigns = [SELECT ID, Campaign_Number__c FROM Campaign__c WHERE ID IN :setId];
         List<String> filteredCampaigns = new List<String>();
-        for(Campaign__c c: [SELECT ID, Campaign_Number__c FROM Campaign__c WHERE ID IN :setId]){
+        for(Campaign__c c :campaigns){
             filteredCampaigns.add('%' + c.Campaign_Number__c + '%');
         }
         Integer countGroups = [SELECT COUNT() FROM Group WHERE Name LIKE :filteredCampaigns];
@@ -56,8 +58,9 @@ public with sharing class CreateGroupsTest {
         List<Campaign__c> testCampaignsId = [SELECT Id FROM Campaign__c WHERE Name LIKE 'TestCampaign_%'];
         Map<ID, SObject> mapTestCampaignsId = new Map<ID, SObject>(testCampaignsId);
         Set<ID> setId = new Set<ID>(mapTestCampaignsId.keySet());
+        List<Campaign__c> campaigns = [SELECT ID, Campaign_Number__c FROM Campaign__c WHERE ID IN :setId];
         List<String> filteredCampaigns = new List<String>();
-        for(Campaign__c c: [SELECT ID, Campaign_Number__c FROM Campaign__c WHERE ID IN :setId]){
+        for(Campaign__c c :campaigns){
             filteredCampaigns.add('%' + c.Campaign_Number__c + '%');
         }
         delete testCampaignsId;
