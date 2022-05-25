@@ -8,7 +8,6 @@ public with sharing class GeoLocationIntegrationTest {
                 Mailing_Country__c = 'Germany',
                 Mailing_City__c = 'Berlin',
                 Mailing_Street__c = 'Bismarckstraße 35',
-                Mailing__c = 'test',
                 Name = 'test'
             )
         );

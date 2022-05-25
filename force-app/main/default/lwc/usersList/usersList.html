@@ -1,0 +1,8 @@
+<template>
+    <lightning-card title={listName} icon-name="standard:groups">
+        <template if:true={users}>
+            <lightning-datatable key-field="Id" data={users} columns={columns} hide-checkbox-column="true">
+            </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>

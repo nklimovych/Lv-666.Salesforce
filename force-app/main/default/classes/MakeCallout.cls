@@ -10,6 +10,7 @@ public with sharing class MakeCallout {
          * Generating url to create request
          */
         String encoded = EncodingUtil.urlEncode(forRequest, 'UTF-8');
+        System.debug('encoded string: '+ encoded);
         HttpRequest request = new HttpRequest();
         request.setEndpoint('https://api.opencagedata.com/geocode/v1/json?q=' + encoded +'&key=' + key);
         request.setMethod('GET');

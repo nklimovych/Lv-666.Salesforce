@@ -4,9 +4,13 @@
 public with sharing class GroupMemberUtils implements Queueable{
     
     public Set<Id> configuratorGroupsId = new Set<Id>();
-
+    public List<User_Campain_Role__c> userCampaignObj = new List<User_Campain_Role__c>();
     public GroupMemberUtils(Set<Id> groupsIdList){
         this.configuratorGroupsId = groupsIdList;
+    }
+
+    public GroupMemberUtils(List<User_Campain_Role__c> newRecords){
+        this.userCampaignObj = newRecords;
     }
 
     /**

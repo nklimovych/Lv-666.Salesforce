@@ -1,0 +1,12 @@
+<template>
+        <template for:each={answers} for:item="answer">
+            <span key={answer.Id} class="slds-radio">
+                <input data-answer-id={answer.Id} data-voting-id={votingId} type="radio" id={answer.Id} value={answer.Id} name={votingId} onclick={handleClick}/>
+                <label class="slds-radio__label" for={answer.Id}>
+                    <span class="slds-radio_faux">
+                    </span>
+                    <span class="slds-form-element__label">{answer.Name}</span>
+                </label>
+            </span>
+        </template>
+</template>

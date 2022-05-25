@@ -15,7 +15,6 @@ public with sharing class GeoLocationIntegration implements Queueable, Database.
      */
     public void execute(QueueableContext context){
         List<Voting_Location__c> locationsToUpdate = new List<Voting_Location__c>();
-
         for(Voting_Location__c currLocation: locations){
             Voting_Location__c updatedLocation = currLocation.clone(true, false, false, false);
             
@@ -51,13 +50,13 @@ public with sharing class GeoLocationIntegration implements Queueable, Database.
     * Getting the first coordinate value from parsedJSON
     */
     public String getFirstCoordinate(Map<String, Object> parsedJSON){
-        return (String) parsedJSON.get('lat');
+        return String.valueOf(parsedJSON.get('lat'));
     }
 
     /*
     * Getting the second coordinate value from parsedJSON
     */
     public String getSecondCoordinate(Map<String, Object> parsedJSON){
-        return (String) parsedJSON.get('lng');
+        return String.valueOf(parsedJSON.get('lng'));
     }
 }
